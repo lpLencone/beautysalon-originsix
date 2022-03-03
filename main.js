@@ -1,4 +1,6 @@
-// TOGGLE MENU BY ICONS
+// ScrollReveal currently overwrites css animations set by me. When it updates into not doing that crap, add '.card' into the scrollReveal animation
+
+// TOGGLE MENU BY CLICKING ON ICONS
 const nav = document.querySelector('#header nav')
 const toggle = document.querySelectorAll('nav .toggle')
 
@@ -8,7 +10,7 @@ for (const element of toggle) {
   })
 }
 
-// CLOSE MENU BY LINKS
+// CLOSE MENU BY CLICKING ON LINKS
 const links = document.querySelectorAll('a.title')
 
 for (const link of links) {
@@ -45,43 +47,32 @@ const swiper = new Swiper('.swiper', {
 })
 
 // ScrollReveal
-ScrollReveal({ reset: true })
+const scrollReveal = ScrollReveal({
+  origin: 'top',
+  distance: '30px',
+  duration: 700,
+  reset: true
+})
 
-ScrollReveal().reveal(
+scrollReveal.reveal(
+  // !!!!!!!! You can't apply any transform rules to those you select on ScrollReveal !!!!!!!!!
   `
-  #home .image, #home .text, 
+  #home .image, #home .text,
+
+  #about .image, #about .text .title, #about .text p,
+
+  #services header .title, #services header p, #services .cards, #services .cards .card i, #services .cards .card h3, #services .cards .card p,
+
+  #testimonials header, #testimonials .testimonials, #testimonials .swiper-pagination,
+
+  #contact .text .title, #contact .text p, #contact .text a, #contact .links li,
   
-  #about .image, #about .text .title, #about .text p, 
-  
-  #services header .title, #services header p, #services .cards .card, 
-  
-  #testimonials header, #testimonials .testimonials, #testimonials .swiper-pagination, 
-  
-  #contact .text .title, #contact .text p, #contact .text a, #contact .links li
+  footer .brand .logo-alt, footer .brand p, footer .social i
   `,
-  {
-    duration: 700,
-    interval: 100,
-    // easing: 'cubic-bezier(0.37, 0.07, 0.48, 1.1)',
-    // interval: 600,
-    distance: '1.875rem',
-    origin: 'top',
-    scale: 0.95
-  }
+  { interval: 100 }
 )
 
-ScrollReveal().reveal(
-  '#services .cards .card i, #services .cards .card .title, #services .cards .card p, footer, footer .brand .logo-alt, footer .brand p, footer .social a',
-  {
-    duration: 700,
-    interval: 100,
-    distance: '1rem',
-    origin: 'top',
-    scale: 0.95
-  }
-)
-
-// the back-to-top button appears on the screen
+// back-to-top button appears on the screen
 const backToTopButton = document.querySelector('.back-to-top')
 const home = document.querySelector('#home')
 const homeHeight = home.offsetHeight
@@ -97,7 +88,7 @@ const sections = document.querySelectorAll('main section[id]')
 function activateMenuAtCurrentSection() {
   const checkpoint = window.scrollY + (window.innerHeight / 9) * 4
 
-  for (section of sections) {
+  for (const section of sections) {
     const sectionTop = section.offsetTop
     const sectionHeight = section.offsetHeight
     const sectionId = section.getAttribute('id')
